@@ -1,0 +1,30 @@
+
+name: Peter's Sport Bridge - Android Build
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build Android APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Show project files
+        run: |
+          echo "Repository bereit"
+          find . -maxdepth 3 -type f | sort
+
+      - name: Check Android project
+        run: |
+          if [ ! -f settings.gradle.kts ] && [ ! -f settings.gradle ]; then
+            echo "Android-Projekt noch nicht vorhanden."
+            echo "Der Build wird nach dem Anlegen der Projektdateien eingerichtet."
+            exit 1
+          fi
